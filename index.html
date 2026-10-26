@@ -96,7 +96,7 @@ body{background:#191919;overflow-x:hidden}
 <div class="contact-line"><div class="service-icon">⌖</div><div><strong>Адрес мастерской</strong><small>Могилёв, Беларусь</small></div></div>
 <div class="contact-line"><div class="service-icon">◷</div><div><strong>Время работы</strong><small>Уточняйте по телефону</small></div></div>
 </div></div>
-<form id="requestForm"><input name="name" placeholder="Как к вам обращаться" aria-label="Ваше имя" required><input name="phone" type="tel" placeholder="Телефон или мессенджер" aria-label="Телефон или мессенджер" required><select name="service" aria-label="Выберите услугу"><option value="">Что нужно сделать?</option><option>Диагностика и ремонт</option><option>Чистка и термопаста</option><option>Ускорение компьютера</option><option>Установка системы и программ</option><option>Сборка или апгрейд</option><option>Другая проблема</option></select><textarea name="details" placeholder="Опишите проблему (необязательно)" aria-label="Описание проблемы"></textarea><button class="btn" type="submit">Подготовить заявку ↗</button><p class="form-note">Демо-форма: она не отправляет данные на сервер. Подключите её к почте, CRM или мессенджеру перед публикацией.</p><div class="form-status" id="formStatus" role="status"></div></form>
+<form id="requestForm" action="https://formsubmit.co/compikml@yandex.ru" method="POST"><input type="hidden" name="_subject" value="Новая заявка с сайта Компик"><input type="hidden" name="_template" value="table"><input type="hidden" name="_captcha" value="false"><input name="name" placeholder="Как к вам обращаться" aria-label="Ваше имя" required><input name="phone" type="tel" placeholder="Телефон или мессенджер" aria-label="Телефон или мессенджер" required><select name="service" aria-label="Выберите услугу"><option value="">Что нужно сделать?</option><option>Диагностика и ремонт</option><option>Чистка и термопаста</option><option>Ускорение компьютера</option><option>Установка системы и программ</option><option>Сборка или апгрейд</option><option>Другая проблема</option></select><textarea name="details" placeholder="Опишите проблему (необязательно)" aria-label="Описание проблемы"></textarea><button class="btn" type="submit">Подготовить заявку ↗</button><p class="form-note">После отправки заявка поступит на почту мастерской. При первом использовании FormSubmit может попросить подтвердить адрес электронной почты.</p><div class="form-status" id="formStatus" role="status"></div></form>
 </div></div></section>
 </main>
 <footer class="footer"><div class="wrap footer-inner"><a class="brand" href="#top"><span class="logo">B</span> Компик</a><span>© <span id="year"></span> Компик · Могилёв, Беларусь. Компьютерная помощь.</span><span>Компьютерная мастерская в Могилёве, Беларусь.</span></div></footer>
@@ -108,18 +108,8 @@ body{background:#191919;overflow-x:hidden}
 ;
 
 document.getElementById('year').textContent = new Date().getFullYear();
-document.getElementById('requestForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  const data = new FormData(this);
-  const lines = ['Заявка в Компик', 'Имя: ' + data.get('name'), 'Контакт: ' + data.get('phone'), 'Услуга: ' + (data.get('service') || 'Не выбрана'), 'Проблема: ' + (data.get('details') || 'Не указана')];
-  const text = lines.join('\\n');
-  const status = document.getElementById('formStatus');
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text).then(() => { status.textContent = 'Заявка подготовлена и скопирована. Свяжитесь с мастерской удобным способом.'; }).catch(() => { status.textContent = 'Демо-форма работает только локально. Подключите отправку заявок перед публикацией.'; });
-  } else {
-    status.textContent = 'Демо-форма: подключите отправку заявок перед публикацией.';
-  }
-});
+// Форма отправляется через FormSubmit на почту мастерской.
+// При первой отправке нужно подтвердить адрес получателя в письме от сервиса.
 </script>
 </body>
 </html>
